@@ -1,0 +1,25 @@
+{
+  "todos": [
+    {
+      "id": 1530710225773,
+      "title": "First TODO",
+      "completed": false,
+      "editing": false
+    },
+    {
+      "id": 1530710225774,
+      "title": "Second TODO",
+      "completed": false,
+      "editing": false
+    },
+    {
+      "id": 1530710225775,
+      "title": "Third TODO",
+      "completed": false,
+      "editing": false
+    }
+  ],
+  "currentId": {
+    "id": null
+  }
+}

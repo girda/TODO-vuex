@@ -1,15 +1,15 @@
 <template>
   <div class="todo-list">
-    <input type="text" class="todo-list__input" placeholder="What needs to be done?" v-model="$store.state.newTodo" @keyup.enter="$store.commit('addTodo')">
+    <input type="text" class="todo-list__input" placeholder="What needs to be done?" @click="$store.dispatch('created')" v-model="$store.state.newTodo" @keyup.enter="$store.commit('addTodo')">
     
     <transition-group name="fade-scale">
       <div v-for="(todo, index) in todosFiltered" :key="todo.id" class="todo-item">
         
-        <input type="checkbox" v-model="todo.completed" @click="$store.commit('completedTodo', todo)">
+        <input type="checkbox" v-model="todo.completed" @click="$store.commit('completedTodo', {todo, index})">
 
         <div class="todo-item__left">
           <div v-if="!todo.editing" @dblclick="$store.commit('editTodo', todo)" class="todo-item__label" :class="{ completed : todo.completed }">{{todo.title}}</div>
-          <input v-else class="todo-item__edit" type="text" v-model="todo.title" @blur="$store.commit('doneEdit', todo)" @keyup.enter="$store.commit('doneEdit', todo)" @keyup.esc="$store.commit('cancelEdit', todo)" v-focus >
+          <input v-else class="todo-item__edit" type="text" v-model="todo.title" @blur="$store.commit('doneEdit', {todo, index})" @keyup.enter="$store.commit('doneEdit', {todo, index})" @keyup.esc="$store.commit('cancelEdit', todo)" v-focus >
         </div>
 
         <div class="todo-item__remove" @click="$store.commit('removeTodo',index)">&times;</div>
@@ -51,6 +51,12 @@ export default {
         el.focus()
       }
     }
+  },
+  created() {
+    this.$store.dispatch('created');
+    setTimeout( () => {
+      console.log(this.$store.state.todos)
+    }, 1)
   },
   computed: {
     ...mapState({
